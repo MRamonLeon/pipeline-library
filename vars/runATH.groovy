@@ -112,7 +112,7 @@ def call(Map params = [:]) {
             def browsers = metadata.browsers ?: ["firefox"]
             def failFast = metadata.failFast ?: false
             def rerunCount = metadata.rerunFailingTestsCount ?: 0
-            // Elvis fails in case useLocalSnapshots == false in metadata File
+            // Elvis fails in case useLocalSnap ots == false in metadata File
             def localSnapshots = metadata.useLocalSnapshots != null ? metadata.useLocalSnapshots : true
 
             if (testsToRun == null && categoriesToRun == null) {
@@ -131,6 +131,7 @@ def call(Map params = [:]) {
                     def javaOptions = defaultJavaOptions.clone()
                     def commandBaseWithFutureJava = ""
                     def containerArgs = "-v /var/run/docker.sock:/var/run/docker.sock -u ath-user"
+                    containerArgs += " -v /home/rleon/.m2/repository:/home/ath-user/.m2/repository"
 
                     if(configFile) {
                         containerArgs += " -e CONFIG=../${configFile}" // ATH runs are executed in a subfolder, hence path needs to take that into account
