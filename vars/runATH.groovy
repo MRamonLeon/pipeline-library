@@ -130,7 +130,8 @@ def call(Map params = [:]) {
                     def currentJdk = jdk
                     def javaOptions = defaultJavaOptions.clone()
                     def commandBaseWithFutureJava = ""
-                    def containerArgs = "-v /var/run/docker.sock:/var/run/docker.sock -u ath-user"
+                    echo "Adding shm-size..."
+                    def containerArgs = "-v /var/run/docker.sock:/var/run/docker.sock -u ath-user  --shm-size 2g"
                     containerArgs += " -v /home/rleon/.m2/repository:/home/ath-user/.m2/repository"
 
                     if(configFile) {
