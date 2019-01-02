@@ -130,9 +130,8 @@ def call(Map params = [:]) {
                     def currentJdk = jdk
                     def javaOptions = defaultJavaOptions.clone()
                     def commandBaseWithFutureJava = ""
-                    echo "Adding shm-size..."
-                    def containerArgs = "-v /var/run/docker.sock:/var/run/docker.sock -u ath-user  --shm-size 2g"
-                    containerArgs += " -v /home/rleon/.m2/repository:/home/ath-user/.m2/repository"
+                    //Add shm-size to avoid selenium.WebDriverException exceptions like 'Failed to decode response from marionette' and webdriver closed
+                    def containerArgs = "-v /var/run/docker.sock:/var/run/docker.sock -u ath-user --shm-size 2g"
 
                     if(configFile) {
                         containerArgs += " -e CONFIG=../${configFile}" // ATH runs are executed in a subfolder, hence path needs to take that into account
